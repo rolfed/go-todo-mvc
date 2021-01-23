@@ -1,12 +1,30 @@
 package model
 
+import (
+	"fmt"
+	"net/http"
+
+	"../util"
+)
+
+// Mock database
 var (
 	todoCollection = map[int64]*Todo{
-		001: {Title: "My First Todo task", Desc: "Finish todo app", isComplete: false},
-		002: {Title: "My Second Todo task", Desc: "Finish todo app", isComplete: false},
+		001: &Todo{Title: "My first todo task", Desc: "Finish todo app", isComplete: false},
+		002: &Todo{Title: "My second todo task", Desc: "Finish todo app", isComplete: false},
 	}
 )
 
-func GetTodo(todoId) (Todo, error) {
+// GetTodo querys database todo column by id
+func GetTodo(todoId int64) (*Todo, *util.AppError) {
+	if todo := todoCollection[todoId]; todo != nil {
+		return todo, nil
+	}
+
+	return nil, &util.AppError{
+		Message:    fmt.Sprintf("todo %v was not found", todoId),
+		StatusCode: http.StatusNotFound,
+		Code:       "not found",
+	}
 
 }

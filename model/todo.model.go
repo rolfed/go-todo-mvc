@@ -5,3 +5,7 @@ type Todo struct {
 	Desc string `json:"desc"`
 	isComplete bool `json:"isComplete`
 }
+
+type TodoCollection struct {
+	collection []Todo `json:"todoCollection"`
+}
